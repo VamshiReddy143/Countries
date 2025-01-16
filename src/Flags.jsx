@@ -78,7 +78,15 @@ const Flags = () => {
           </div>
         </div>
       ) : (
-        <Flag flags={filteredFlags} />
+        <>
+          <Flag flags={filteredFlags} />
+          {/* Note to reload page if no data */}
+          {filteredFlags.length === 0 && !loading && (
+            <p className="text-center text-sm text-gray-500 mt-4">
+              No data found. Please reload the page.
+            </p>
+          )}
+        </>
       )}
     </div>
   );
