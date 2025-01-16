@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Flag = ({ flags }) => {
   return (
@@ -13,7 +13,7 @@ const Flag = ({ flags }) => {
   );
 };
 
-const FlagCard = ({ flag }) => {
+const FlagCard = React.memo(({ flag }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleImageLoad = () => {
@@ -26,35 +26,36 @@ const FlagCard = ({ flag }) => {
         <div className="w-full h-40 relative">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-600">
-            <div className="loader animate-spin rounded-full border-t-2 border-gray-900 w-8 h-8"></div>
+              <div className="loader animate-spin rounded-full border-t-2 border-gray-900 w-8 h-8"></div>
             </div>
           )}
           <img
-            src={flag.flags.png}
-            alt={flag.name.common}
+            src={flag.flags?.png || "fallback-image-url"} // Add fallback
+            alt={flag.name?.common || "Country Flag"}
             className={`w-full h-40 object-cover transition-opacity duration-500 ${
-              isLoading ? 'opacity-0' : 'opacity-100'
+              isLoading ? "opacity-0" : "opacity-100"
             }`}
             onLoad={handleImageLoad}
+            loading="lazy" // Lazy-load images
           />
         </div>
       </Link>
       <div className="p-4">
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-          {flag.name.common}
+          {flag.name?.common || "Unknown Country"}
         </h2>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>Population:</strong> {flag.population.toLocaleString()}
+          <strong>Population:</strong> {flag.population?.toLocaleString() || "N/A"}
         </p>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>Region:</strong> {flag.region}
+          <strong>Region:</strong> {flag.region || "Unknown"}
         </p>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>Capital:</strong> {flag.capital}
+          <strong>Capital:</strong> {flag.capital?.[0] || "Unknown"}
         </p>
       </div>
     </div>
   );
-};
+});
 
 export default Flag;
