@@ -26,7 +26,7 @@ const FlagCard = ({ flag }) => {
         <div className="w-full h-40 relative">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-600">
-              <div className="loader border-t-2 border-b-2 border-gray-900 rounded-full w-8 h-8 animate-spin"></div>
+            <div className="loader animate-spin rounded-full border-t-2 border-gray-900 w-8 h-8"></div>
             </div>
           )}
           <img
