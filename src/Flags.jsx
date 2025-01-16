@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Flag from './Flag';
 import { IoSearch } from 'react-icons/io5';
+import axios from 'axios';  // Import axios
 
 const Flags = () => {
   const [flags, setFlags] = useState([]); // Stores all fetched flags
@@ -15,11 +16,11 @@ const Flags = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(FlagApi);
-        const data = await response.json();
-        console.log('Fetched Data:', data); // Check fetched data
-        setFlags(data);
-        setFilteredFlags(data);  // Assuming no initial filter
+        // Use axios to fetch the data
+        const response = await axios.get(FlagApi);
+        console.log('Fetched Data:', response.data); // Check fetched data
+        setFlags(response.data);
+        setFilteredFlags(response.data);  // Assuming no initial filter
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
