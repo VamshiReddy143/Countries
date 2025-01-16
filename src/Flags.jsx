@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Flag from "./Flag";
-import { IoSearch } from "react-icons/io5";
+import React, { useState, useEffect } from 'react';
+import Flag from './Flag';
+import { IoSearch } from 'react-icons/io5';
 
 const Flags = () => {
-  const [flags, setFlags] = useState([]); 
-  const [search, setSearch] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState(""); 
-  const [loading, setLoading] = useState(true); 
+  const [flags, setFlags] = useState([]); // Stores all fetched flags
+  const [filteredFlags, setFilteredFlags] = useState([]); // Stores filtered flags
+  const [search, setSearch] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [loading, setLoading] = useState(true); // Tracks loading state
 
-  const FlagApi = "https://restcountries.com/v3.1/all";
+  const FlagApi = 'https://restcountries.com/v3.1/all';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,28 +17,30 @@ const Flags = () => {
       try {
         const response = await fetch(FlagApi);
         const data = await response.json();
-        setFlags(data); 
-        
+        console.log('Fetched Data:', data); // Check fetched data
+        setFlags(data);
+        setFilteredFlags(data);  // Assuming no initial filter
       } catch (error) {
-        console.error("Error fetching data:", error);
-       
+        console.error('Error fetching data:', error);
       } finally {
-        setLoading(false); 
-        
+        setLoading(false);
       }
     };
-
     fetchData();
-  }, []);
+  }, []); // Empty dependency array, runs only once when component mounts
 
-  // Dynamic filtering during rendering
-  const filteredFlags = flags.filter((flag) => {
-    const matchesSearch = flag.name.common
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesRegion = selectedRegion === "" || flag.region === selectedRegion;
-    return matchesSearch && matchesRegion;
-  });
+  // Filter flags whenever `search` or `selectedRegion` changes
+  useEffect(() => {
+    const filtered = flags.filter((flag) => {
+      const matchesSearch = flag.name.common
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesRegion =
+        selectedRegion === '' || flag.region === selectedRegion;
+      return matchesSearch && matchesRegion;
+    });
+    setFilteredFlags(filtered);
+  }, [search, selectedRegion, flags]); // Re-run filtering logic when any of these values change
 
   return (
     <div>
