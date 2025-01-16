@@ -30,8 +30,8 @@ const FlagCard = React.memo(({ flag }) => {
             </div>
           )}
           <img
-            src={flag.flags?.png || "fallback-image-url"} // Add fallback
-            alt={flag.name?.common || "Country Flag"}
+            src={flag?.flags?.png || "fallback-image-url"} // Add fallback
+            alt={flag?.name?.common || "Country Flag"}
             className={`w-full h-40 object-cover transition-opacity duration-500 ${
               isLoading ? "opacity-0" : "opacity-100"
             }`}
@@ -45,10 +45,10 @@ const FlagCard = React.memo(({ flag }) => {
           {flag.name?.common || "Unknown Country"}
         </h2>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>Population:</strong> {flag.population?.toLocaleString() || "N/A"}
+          <strong>Population:</strong> {flag?.population?.toLocaleString() || "N/A"}
         </p>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>Region:</strong> {flag.region || "Unknown"}
+          <strong>Region:</strong> {flag?.region || "Unknown"}
         </p>
         <p className="text-sm text-gray-700 dark:text-gray-300">
           <strong>Capital:</strong> {flag.capital?.[0] || "Unknown"}
